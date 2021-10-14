@@ -1,7 +1,7 @@
 # For full config options, check the docs:
 #    docs.serverless.com
 
-service: tablecheck-reverse-proxy-${env:SERVICE_NAME}
+service: tablecheck-reverse-proxy-${env:SERVICE_NAME, 'service'}
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -20,5 +20,5 @@ functions:
           path: /
           method: any
     environment:
-      URL: ${file(./config.yml):URL}
-      AWS_SIGN_REQUESTS: ${file(./config.yml):AWS_SIGN_REQUESTS}
+      URL: ${env:SERVICE_URL, 'https://localhost'}
+      AWS_SIGN_REQUESTS: ${env:AWS_SIGN_REQUESTS, 'false'}
