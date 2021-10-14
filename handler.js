@@ -17,6 +17,7 @@ module.exports.proxy = (event, context, callback) => {
   var res = http.request(
     signRequest({
       hostname: process.env.URL,
+      port: 80,
       method: event.httpMethod,
       headers: event.headers,
       path: event.path,
