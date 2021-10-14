@@ -1,5 +1,5 @@
 'use strict';
-const http = require('http')
+const https = require('https')
 const url = require('url')
 
 var signRequest = (requestOptions) => { return requestOptions }
@@ -8,20 +8,19 @@ if (process.env.AWS_SIGN_REQUESTS) {
   signRequest = require('aws4').sign
 }
 
-const httpAgent = http.Agent({
+const httpsAgent = https.Agent({
   keepAlive: true,
   keepAliveMsecs: 300000
 })
 
 module.exports.proxy = (event, context, callback) => {
-  var res = http.request(
+  var res = https.request(
     signRequest({
       hostname: process.env.URL,
-      port: 80,
       method: event.httpMethod,
       headers: event.headers,
       path: event.path,
-      agent: httpAgent,
+      agent: httpsAgent,
       timeout: 30 /* maximum time for api gateway invoked Lambda */
     })
   )
