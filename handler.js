@@ -21,6 +21,7 @@ module.exports.proxy = (event, context, callback) => {
       headers: event.headers,
       path: event.path,
       agent: httpsAgent,
+      rejectUnauthorized: false,
       timeout: 30 /* maximum time for api gateway invoked Lambda */
     })
   )
